@@ -208,6 +208,23 @@ script_patches = [
 			(neg|eq, ":party_faction", "fac_player_faction"),
 		]
 	],
+	# Fix a bug in a native script
+	[
+		SD_OP_BLOCK_INSERT,
+		"party_inflict_attrition",
+		D_SEARCH_FROM_TOP | D_SEARCH_SCRIPTLINE | D_INSERT_AFTER,
+
+		(lt, ":random", ":chance_of_additional_casualty"), 0,
+
+		[
+			# Basically by this point :casualties is the number of already applied
+			# _guaranteed_ casualties, and the code tries to randomly add one more
+			# to account for the fraction lost by division; but it uses a copy of
+			# the same party_add_members line so it just doubles the guaranteed
+			# number, which easily can be 0, or possibly greater than 1.
+			(assign, ":casualties", 1),
+		]
+	],
 ]
 
 new_scripts = [

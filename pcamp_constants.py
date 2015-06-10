@@ -9,6 +9,9 @@ pcamp_max_center_distance = 10
 # Chance for a lord to escape from camp (default for party - 50)
 pcamp_lord_escape_chance = 40
 
+# Daily desertion chance of 1% per divisor*10% of debt relative to total wage; max 30/divisor%
+pcamp_desertion_divisor = 4
+
 # Number of additional troops per commander leadership level and charisma
 pcamp_commander_leadership_size_bonus = 5
 pcamp_commander_charisma_size_bonus = 1

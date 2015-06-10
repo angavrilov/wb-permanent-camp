@@ -5,6 +5,7 @@ Features:
     - Garrison size is limited to player party size + commander skill bonus.
     - Prisoner count is limited based on commander skill + garrison troop count.
     - Troops draw full wage, but are assumed to buy their own food from locals.
+    - If unpaid, troops desert; this can't be countered by any morale boosts.
     - Can store items, which increases bandit attraction.
 
   * Camps can and will be attacked by hostile parties.
@@ -14,10 +15,21 @@ Features:
     - Camp will join in the battle if player is attacked right on top of it.
     - Player will stop resting and join battle if current camp is attacked.
 
+Configuration:
+
+  There are some options at the start of pcamp_constants.py. The absolute maximum
+  number of camps is determined by the number of player_camp_chest_* troops before
+  player_camp_chest_end in pcamp_troops.py
+
+  If building module fails with messages about pt_player_camp, add this to
+  ID_party_templates.py and then build module _twice_ before using:
+
+    pt_player_camp=0
+
 Bugs:
 
   * Camps are ordinary parties told to stay put, but they technically can still move
-    if AI decides to for some reason. Haven't seen this after a few tweaks though.
+    if AI decides to for some reason. Haven't seen this for a while after some fixes.
 
   * Camp interactions leave spurious battle marks that can be seen with tracking
     skill after disbanding the camp.

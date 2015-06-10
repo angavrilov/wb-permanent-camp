@@ -35,6 +35,49 @@ patches = [
 			]
 		],
 	 ]),
+	# Make troops desert from camps if unpaid
+	([
+		(party_get_morale, ":main_party_morale", "p_main_party"),
+		(val_add, ":num_deserters_total", ":num_deserters_from_that_troop"),
+	 ],[
+		[
+			SD_OP_BLOCK_INSERT, "",
+			D_SEARCH_FROM_BOTTOM | D_SEARCH_SCRIPTLINE | D_INSERT_AFTER,
+
+			(val_add, ":num_deserters_total", ":num_deserters_from_that_troop"), 0,
+
+			[
+					(try_end),
+				(try_end),
+				(try_begin),
+					(store_div, ":desert_prob", "$g_player_party_morale_modifier_debt", pcamp_desertion_divisor),
+					(gt, ":desert_prob", 0),
+
+					(try_for_range, ":chest", pcamp_chests_begin, pcamp_chests_end),
+						(troop_get_slot, ":party", ":chest", slot_pcamp_chest_party),
+						(gt, ":party", 0),
+						(party_is_active, ":party"),
+						(call_script, "script_party_inflict_attrition", ":party", ":desert_prob", 1),
+						(party_get_num_companions, ":num_deserters_from_camp", "p_temp_casualties"),
+						(try_begin),
+							(gt, ":num_deserters_from_camp", 0),
+							(str_store_party_name, s3, ":party"),
+							(str_store_string, s2, "@soldiers from {s3}"),
+							(assign, reg0, ":num_deserters_from_camp"),
+							(try_begin),
+								(ge, ":num_deserters_total", 1),
+								(str_store_string, s1, "str_s1_reg0_s2"),
+							(else_try),
+								(str_store_string, s3, s1),
+								(str_store_string, s1, "str_s3_reg0_s2"),
+							(try_end),
+							(val_add, ":num_deserters_total", ":num_deserters_from_camp"),
+						(try_end),
+				#   (try_end), <- from code already there
+				#(try_end),
+			]
+		],
+	 ]),
 ]
 
 new_triggers = [
