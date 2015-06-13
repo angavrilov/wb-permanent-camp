@@ -34,6 +34,22 @@ patches_budget = [
 			(this_or_next|party_slot_eq, ":party_no", slot_party_type, spt_player_camp),
 		]
 	],
+	# Include camp troops into mercenary payment calculation
+	[
+		SD_OP_BLOCK_INSERT,
+		str(ti_on_presentation_load),
+		D_SEARCH_FROM_TOP | D_SEARCH_SCRIPTLINE | D_INSERT_AFTER,
+
+		(assign, ":offer_value", reg0), 0,
+
+		[
+			(try_for_parties, ":party_no"),
+				(party_slot_eq, ":party_no", slot_party_type, spt_player_camp),
+				(call_script, "script_party_calculate_strength", ":party_no", 0),
+				(val_add, ":offer_value", reg0),
+			(try_end),
+		]
+	],
 ]
 
 new_presentations = [
