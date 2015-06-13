@@ -22,6 +22,8 @@ pcamp_troop_count_prisoner_divisor = 5
 
 # Internal constants
 
+spt_player_camp = 33 # arbitrary unique number
+
 pcamp_chests_begin = "trp_player_camp_chest_1"
 pcamp_chests_end = "trp_player_camp_chest_end"
 

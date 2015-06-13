@@ -22,7 +22,7 @@ script_patches = [
 
 		[
 			(else_try),
-				(eq, "$g_encountered_party_template", "pt_player_camp"),
+				(party_slot_eq, "$g_encountered_party", slot_party_type, spt_player_camp),
 				(jump_to_menu, "mnu_player_camp"),
 		]
 	],
@@ -41,8 +41,7 @@ script_patches = [
 				(eq, "$g_encountered_party_template", "pt_player_camp"),
 				#(assign, ":limit", 15), (eq, 1, 0), # debug
 				(store_script_param_1, ":camp_party"),
-				(party_get_template_id, ":template",":camp_party"),
-				(eq, ":template", "pt_player_camp"),
+				(party_slot_eq, ":camp_party", slot_party_type, spt_player_camp),
 
 				# add bonus from commander skills
 				(party_get_slot, ":troop_no", ":camp_party", slot_pcamp_camp_commander),
@@ -66,8 +65,7 @@ script_patches = [
 		[
 			(try_begin),
 				(store_script_param_1, ":camp_party"),
-				(party_get_template_id, ":template",":camp_party"),
-				(eq, ":template", "pt_player_camp"),
+				(party_slot_eq, ":camp_party", slot_party_type, spt_player_camp),
 
 				# recompute prisoner limit from commander skills and troop count
 				(party_get_slot, ":troop_no", ":camp_party", slot_pcamp_camp_commander),
@@ -113,21 +111,10 @@ script_patches = [
 		"calculate_player_faction_wage",
 		D_SEARCH_FROM_TOP | D_SEARCH_SCRIPTLINE | D_INSERT_AFTER,
 
-		(assign, ":garrison_troop", 0), 0,
-
-		[
-			(party_get_template_id, ":party_template",":party_no"),
-		]
-	],
-	[
-		SD_OP_BLOCK_INSERT,
-		"calculate_player_faction_wage",
-		D_SEARCH_FROM_TOP | D_SEARCH_SCRIPTLINE | D_INSERT_AFTER,
-
 		(this_or_next|eq, ":party_no", "p_main_party"), 0,
 
 		[
-			(this_or_next|eq, ":party_template", "pt_player_camp"),
+			(this_or_next|party_slot_eq, ":party_no", slot_party_type, spt_player_camp),
 		]
 	],
 	# Correctly report companion's occupation in notes
@@ -142,8 +129,7 @@ script_patches = [
 			(else_try),
 				(troop_get_slot, ":party", ":companion", slot_troop_leaded_party),
 				(party_is_active, ":party"),
-				(party_get_template_id, ":template",":party"),
-				(eq, ":template", "pt_player_camp"),
+				(party_slot_eq, ":party", slot_party_type, spt_player_camp),
 				(party_get_slot, ":camp_chest", ":party", slot_pcamp_camp_chest),
 				(troop_get_slot, ":camp_center", ":camp_chest", slot_pcamp_chest_center),
 				(str_store_party_name, s5, ":camp_center"),
@@ -159,11 +145,10 @@ script_patches = [
 		(eq, ":besiege_mode", 0), 0,
 
 		[
+				(party_slot_eq, ":party_no", slot_party_type, spt_player_camp),
 				(eq, ":besiege_mode", 0),
 				(eq, ":dont_add_friends_other_than_accompanying", 0),
 				(lt, ":distance", 1),
-				(party_get_template_id, ":party_template",":party_no"),
-				(eq, ":party_template", "pt_player_camp"),
 
 				(party_quick_attach_to_current_battle, ":party_no", 0),
 				(str_store_party_name, s1, ":party_no"),
@@ -181,10 +166,9 @@ script_patches = [
 
 		[
 				(ge, ":root_defender_party", 1),
+				(party_slot_eq, ":root_defender_party", slot_party_type, spt_player_camp),
 				(ge, "$g_camp_mode", 1),
 				(eq, "$auto_enter_town", ":root_defender_party"),
-				(party_get_template_id, ":party_template", ":root_defender_party"),
-				(eq, ":party_template", "pt_player_camp"),
 
 				(assign, ":trigger_result", 0),
 
@@ -502,10 +486,9 @@ x = [
 	("game_get_party_speed_multiplier",
 		[
 			(store_script_param_1, ":party_no"),
-			(party_get_template_id, ":template",":party_no"),
 			(assign, ":result", 100),
 			(try_begin),
-				(eq, ":template", "pt_player_camp"),
+				(party_slot_eq, ":party_no", slot_party_type, spt_player_camp),
 				(assign, ":result", 0),
 			(try_end),
 			(set_trigger_result, ":result"),

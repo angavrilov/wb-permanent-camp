@@ -17,32 +17,10 @@ patches_budget = [
 		str(ti_on_presentation_load),
 		D_SEARCH_FROM_TOP | D_SEARCH_SCRIPTLINE | D_INSERT_AFTER,
 
-		(assign, ":garrison_troop", 0), 0,
-
-		[
-			(party_get_template_id, ":party_template",":party_no"),
-		]
-	],
-	[
-		SD_OP_BLOCK_INSERT,
-		str(ti_on_presentation_load),
-		D_SEARCH_FROM_TOP | D_SEARCH_SCRIPTLINE | D_INSERT_AFTER,
-
 		(this_or_next|eq, ":party_no", "p_main_party"), 0,
 
 		[
-			(this_or_next|eq, ":party_template", "pt_player_camp"),
-		]
-	],
-	[
-		SD_OP_BLOCK_INSERT,
-		str(ti_on_presentation_load),
-		D_SEARCH_FROM_TOP | D_SEARCH_SCRIPTLINE | D_INSERT_AFTER,
-
-		(assign, ":garrison_troop", 0), 1,
-
-		[
-			(party_get_template_id, ":party_template",":party_no"),
+			(this_or_next|party_slot_eq, ":party_no", slot_party_type, spt_player_camp),
 		]
 	],
 	[
@@ -53,7 +31,7 @@ patches_budget = [
 		(this_or_next|eq, ":party_no", "p_main_party"), 1,
 
 		[
-			(this_or_next|eq, ":party_template", "pt_player_camp"),
+			(this_or_next|party_slot_eq, ":party_no", slot_party_type, spt_player_camp),
 		]
 	],
 ]

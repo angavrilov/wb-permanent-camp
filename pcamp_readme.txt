@@ -21,6 +21,9 @@ Configuration:
   number of camps is determined by the number of player_camp_chest_* troops before
   player_camp_chest_end in pcamp_troops.py
 
+  When merging with other mods, check that spt_player_type doesn't conflict with
+  any other new spt_* constant.
+
   If building module fails with messages about pt_player_camp, add this to
   ID_party_templates.py and then build module _twice_ before using:
 

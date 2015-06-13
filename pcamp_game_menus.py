@@ -23,8 +23,7 @@ init_block_patches = [
 			(else_try),
 				(troop_get_slot, ":party", ":companion", slot_troop_leaded_party),
 				(party_is_active, ":party"),
-				(party_get_template_id, ":template",":party"),
-				(eq, ":template", "pt_player_camp"),
+				(party_slot_eq, ":party", slot_party_type, spt_player_camp),
 				(party_get_slot, ":camp_chest", ":party", slot_pcamp_camp_chest),
 				(troop_get_slot, ":camp_center", ":camp_chest", slot_pcamp_chest_center),
 				(str_store_party_name, s9, ":camp_center"),
@@ -159,6 +158,7 @@ game_menus = [
 				(set_spawn_radius, 0),
 				(spawn_around_party,"p_main_party", "pt_player_camp"),
 				(assign, ":camp_party", reg0),
+				(party_set_slot, ":camp_party", slot_party_type, spt_player_camp),
 
 				# Set up ai to (hopefully) avoid any weird behavior from it
 				(party_set_slot, ":camp_party", slot_party_ai_state, spai_undefined),
