@@ -92,7 +92,7 @@ script_patches = [
 				(neg|party_is_active, ":party"),
 
 				(str_store_troop_name, s0, ":chest"),
-				(display_message, "@{s0} has been destroyed!", 0xFFFF2222),
+				(display_message, "str_pcamp_s0_destroyed", 0xFFFF2222),
 
 				(try_begin),
 					(eq, "$auto_enter_town", ":party"),
@@ -133,7 +133,7 @@ script_patches = [
 				(party_get_slot, ":camp_chest", ":party", slot_pcamp_camp_chest),
 				(troop_get_slot, ":camp_center", ":camp_chest", slot_pcamp_chest_center),
 				(str_store_party_name, s5, ":camp_center"),
-				(str_store_string, s0, "@Is commanding a camp near {s5}."),
+				(str_store_string, s0, "str_pcamp_is_commanding_near_s5"),
 		]
 	],
 	# Camps join player's battles that are right on top of them
@@ -230,7 +230,7 @@ new_scripts = [
 			(troop_set_slot, ":camp_chest", slot_pcamp_chest_commander, ":new_commander"),
 
 			(str_store_troop_name, s0, ":new_commander"),
-			(str_store_string, s1, "@{s0}'s Camp"),
+			(str_store_string, s1, "str_pcamp_s0s_camp"),
 			(party_set_name, ":camp_party", s1),
 			(troop_set_name, ":camp_chest", s1),
 		]),

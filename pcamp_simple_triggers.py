@@ -62,7 +62,7 @@ patches = [
 						(try_begin),
 							(gt, ":num_deserters_from_camp", 0),
 							(str_store_party_name, s3, ":party"),
-							(str_store_string, s2, "@soldiers from {s3}"),
+							(str_store_string, s2, "str_pcamp_soldiers_from_s3"),
 							(assign, reg0, ":num_deserters_from_camp"),
 							(try_begin),
 								(ge, ":num_deserters_total", 1),
