@@ -3,6 +3,12 @@ from module_constants import *
 # Cost to build a camp
 pcamp_build_cost = 100
 
+# Skill that controls camps
+pcamp_build_skill = "skl_leadership"
+
+# First level when you can build one; then increases 1 per level until hard cap
+pcamp_build_skill_threshold = 2
+
 # Max allowed distance to nearest center
 pcamp_max_center_distance = 10
 

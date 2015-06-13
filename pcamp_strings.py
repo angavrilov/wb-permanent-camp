@@ -24,4 +24,6 @@ strings = [
   ("pcamp_is_commanding_near_s5", "Is commanding a camp near {s5}."),
   ("pcamp_s0s_camp", "{s0}'s Camp"),
   ("pcamp_soldiers_from_s3", "soldiers from {s3}"),
+  ("pcamp_skill_too_low", "Your leadership skill does not allow any more active camps."),
+  ("pcamp_s5_cheat_can_do_anyway","{s5}^^CHEAT MODE: You can do it anyway!"),
 ]

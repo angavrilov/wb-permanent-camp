@@ -205,6 +205,7 @@ troops = [
 	# These may hold inventory and also are safe data storage even if party is deleted
 	["player_camp_chest_1","{!}Camp1","{!}Camp1",tf_hero|tf_inactive,0,reserved,fac_neutral,[],def_attrib|level(18),wp(60),knows_common,0],
 	["player_camp_chest_2","{!}Camp2","{!}Camp2",tf_hero|tf_inactive,0,reserved,fac_neutral,[],def_attrib|level(18),wp(60),knows_common,0],
+	["player_camp_chest_3","{!}Camp3","{!}Camp3",tf_hero|tf_inactive,0,reserved,fac_neutral,[],def_attrib|level(18),wp(60),knows_common,0],
 	["player_camp_chest_end","{!}CampZ","{!}CampZ",tf_hero|tf_inactive,0,reserved,fac_neutral,[],def_attrib|level(18),wp(60),knows_common,0],
 ]
 

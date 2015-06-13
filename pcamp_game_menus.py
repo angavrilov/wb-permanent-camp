@@ -104,6 +104,15 @@ game_menus = [
 				(assign, "$g_talk_troop_party", ":cur_chest"),
 			(try_end),
 
+			# Check skill
+			(store_sub, ":num_camp_slots", pcamp_chests_end, pcamp_chests_begin),
+			(store_sub, ":num_current_camps", ":num_camp_slots", ":num_free_camps"),
+			(store_skill_level, ":skill", pcamp_build_skill, "trp_player"),
+			(val_sub, ":skill", pcamp_build_skill_threshold-1),
+			(val_sub, ":skill", ":num_current_camps"),
+			(val_max, ":skill", 0),
+			(val_min, ":num_free_camps", ":skill"),
+
 			# Find a companion to command it
 			(party_get_num_companion_stacks, ":num_stacks", "p_main_party"),
 			(try_for_range, ":i_stack", 0, ":num_stacks"),
@@ -135,10 +144,16 @@ game_menus = [
 				(lt, reg6, reg7),
 				(str_store_string, s5, "str_pcamp_no_reg7_denars"),
 			(else_try),
+				(le, ":num_free_camps", 0),
+				(str_store_string, s5, "str_pcamp_skill_too_low"),
+				(ge, "$cheat_mode", 1),
+				(str_store_string, s5, "str_pcamp_s5_cheat_can_do_anyway"),
+				(assign, "$g_talk_troop", ":free_companion"),
+			(else_try),
 				(gt, ":center_distance", pcamp_max_center_distance),
 				(str_store_string, s5, "str_pcamp_too_far_from_s0"),
 				(ge, "$cheat_mode", 1),
-				(str_store_string, s5, "@{!}{s5}^^CHEAT MODE: You can do it anyway!"),
+				(str_store_string, s5, "str_pcamp_s5_cheat_can_do_anyway"),
 				(assign, "$g_talk_troop", ":free_companion"),
 			(else_try),
 				(str_store_string, s5, "str_pcamp_can_start_camp_s0_reg5_reg6_reg7"),
