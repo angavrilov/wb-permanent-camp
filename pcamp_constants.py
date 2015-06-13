@@ -12,6 +12,10 @@ pcamp_lord_escape_chance = 40
 # Daily desertion chance of 1% per divisor*10% of debt relative to total wage; max 30/divisor%
 pcamp_desertion_divisor = 4
 
+# Percentage of player party's stats that directly carry over to camps
+pcamp_player_party_size_percentage = 100
+pcamp_player_prisoner_count_percentage = 0
+
 # Number of additional troops per commander leadership level and charisma
 pcamp_commander_leadership_size_bonus = 5
 pcamp_commander_charisma_size_bonus = 1

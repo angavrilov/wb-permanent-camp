@@ -43,6 +43,10 @@ script_patches = [
 				(store_script_param_1, ":camp_party"),
 				(party_slot_eq, ":camp_party", slot_party_type, spt_player_camp),
 
+				# keep a percentage of player stats
+				(val_mul, ":limit", pcamp_player_party_size_percentage),
+				(val_div, ":limit", 100),
+
 				# add bonus from commander skills
 				(party_get_slot, ":troop_no", ":camp_party", slot_pcamp_camp_commander),
 				(store_skill_level, ":skill", "skl_leadership", ":troop_no"),
@@ -67,10 +71,15 @@ script_patches = [
 				(store_script_param_1, ":camp_party"),
 				(party_slot_eq, ":camp_party", slot_party_type, spt_player_camp),
 
+				# keep a percentage of player stats
+				(val_mul, ":limit", pcamp_player_prisoner_count_percentage),
+				(val_div, ":limit", 100),
+
 				# recompute prisoner limit from commander skills and troop count
 				(party_get_slot, ":troop_no", ":camp_party", slot_pcamp_camp_commander),
 				(store_skill_level, ":skill", "skl_prisoner_management", ":troop_no"),
-				(store_mul, ":limit", ":skill", pcamp_commander_prisoner_skill_bonus),
+				(val_mul, ":skill", pcamp_commander_prisoner_skill_bonus),
+				(val_add, ":limit", ":skill"),
 				(party_get_num_companions, ":troops", ":camp_party"),
 				(val_div, ":troops", pcamp_troop_count_prisoner_divisor),
 				(val_add, ":limit", ":troops"),
