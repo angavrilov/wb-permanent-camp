@@ -39,5 +39,3 @@ Bugs:
 
   * AI is unaware that camps will always join in on the battle and can be easily
     tricked into attacking against the odds.
-
-  * Camp troops in battle have no banner (but still obey player commands).

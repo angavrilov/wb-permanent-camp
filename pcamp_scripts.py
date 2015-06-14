@@ -201,6 +201,20 @@ script_patches = [
 			(neg|eq, ":party_faction", "fac_player_faction"),
 		]
 	],
+	# Use player's banner for camp troops in battle
+	[
+		SD_OP_BLOCK_INSERT,
+		"agent_troop_get_banner_mesh",
+		D_SEARCH_FROM_TOP | D_SEARCH_SCRIPTLINE | D_INSERT_BEFORE,
+
+		(eq, ":party_template", "pt_deserters"), 0,
+
+		[
+				(eq, ":party_template", "pt_player_camp"),
+				(assign, ":banner_troop", "trp_player"),
+			(else_try),
+		]
+	],
 	# Fix a bug in a native script
 	[
 		SD_OP_BLOCK_INSERT,
