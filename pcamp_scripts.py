@@ -281,7 +281,10 @@ new_scripts = [
 
 			(troop_set_slot, ":chest", slot_pcamp_chest_party, 0),
 			(troop_set_slot, ":chest", slot_pcamp_chest_commander, 0),
+			(troop_set_slot, ":chest", slot_pcamp_chest_sell_prisoners, 0),
 			(troop_clear_inventory, ":chest"),
+			(store_troop_gold, ":gold", ":chest"),
+			(troop_remove_gold, ":chest", ":gold"),
 		]),
 
 	("cleanup_player_camp_commander",
@@ -501,6 +504,73 @@ new_scripts = [
 
 			(assign, reg0, ":best_camp"),
 			(assign, reg1, ":min_distance"),
+		]),
+
+	("find_closest_town",
+		[
+			(store_script_param_1, ":party_no"),
+			(assign, reg0, -1),
+			(assign, reg1, 9999999),
+			(try_for_range, ":town_no", towns_begin, towns_end),
+				(store_distance_to_party_from_party, ":distance", ":party_no", ":town_no"),
+				(lt, ":distance", reg1),
+				(assign, reg0, ":town_no"),
+				(assign, reg1, ":distance"),
+			(try_end),
+		]),
+
+	("pcamp_ransom_prisoners",
+		[
+			(assign, ":old_tt", "$g_talk_troop"),
+
+			(try_for_range, ":chest", pcamp_chests_begin, pcamp_chests_end),
+				(troop_slot_eq, ":chest", slot_pcamp_chest_sell_prisoners, 1),
+
+				(troop_get_slot, ":party", ":chest", slot_pcamp_chest_party),
+				(gt, ":party", 0),
+				(party_is_active, ":party"),
+
+				# requires broker in city
+				(troop_get_slot, ":city", ":chest", slot_pcamp_chest_city),
+				(is_between, ":city", towns_begin, towns_end),
+				(party_get_slot, "$g_talk_troop", ":city", slot_center_ransom_broker),
+				(gt, "$g_talk_troop", 0),
+
+				# can't sell in enemy cities
+				(store_faction_of_party, ":city_faction", ":city"),
+				(store_relation, ":faction_rel", ":city_faction", "fac_player_faction"),
+				(ge, ":faction_rel", 0),
+
+				(assign, ":total", 0),
+
+				(party_get_num_prisoner_stacks, ":num_stacks", ":party"),
+				(try_for_range_backwards, ":stack_no", 0, ":num_stacks"),
+					(party_prisoner_stack_get_troop_id, ":stack_troop",":party",":stack_no"),
+					(neg|troop_is_hero, ":stack_troop"),
+					(party_prisoner_stack_get_size, ":stack_size",":party",":stack_no"),
+					(call_script, "script_game_get_prisoner_price", ":stack_troop"),
+					(store_mul, ":price", ":stack_size", reg0),
+					(val_add, ":total", ":price"),
+					(party_remove_prisoners, ":party", ":stack_troop", ":stack_size"),
+
+					(try_begin),
+						(eq, "$cheat_mode", 1),
+						(assign, reg0, ":price"),
+						(assign, reg1, ":stack_size"),
+						(str_store_troop_name, s0, ":chest"),
+						(str_store_troop_name, s1, ":stack_troop"),
+						(display_message, "@{!}DEBUG: {s0} sold {reg1} {s1} for {reg0}"),
+					(try_end),
+				(try_end),
+
+				(try_begin),
+					(gt, ":total", 0),
+					(troop_add_gold, ":chest", ":total"),
+					(call_script, "script_calc_player_camp_bandit_attraction", ":party"),
+				(try_end),
+			(try_end),
+
+			(assign, "$g_talk_troop", ":old_tt"),
 		]),
 ]
 

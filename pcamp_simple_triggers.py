@@ -78,6 +78,20 @@ patches = [
 			]
 		],
 	 ]),
+	# Auto-ransom prisoners every 6 hours
+	([
+		(assign, ":resting_at_manor_or_walled_center", 0),
+		(assign, "$g_half_payment_checkpoint", 0),
+	 ],[
+		[
+			SD_OP_BLOCK_INSERT, "",
+			D_SEARCH_FROM_TOP | D_SEARCH_LINENUMBER | D_INSERT_BEFORE,
+			0, 0,
+			[
+				(call_script, "script_pcamp_ransom_prisoners"),
+			]
+		],
+	 ]),
 ]
 
 new_triggers = [

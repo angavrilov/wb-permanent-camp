@@ -57,6 +57,36 @@ dialogs = [
 
 	[anyone|plyr, "player_camp_choice",
 		[
+			(party_get_slot, ":chest", "$g_talk_troop_party", slot_pcamp_camp_chest),
+			(neg|troop_slot_eq, ":chest", slot_pcamp_chest_sell_prisoners, 1),
+			(troop_get_slot, ":city", ":chest", slot_pcamp_chest_city),
+			(str_store_party_name, s0, ":city"),
+		],
+		"I want you to ransom all prisoners in {s0} whenever possible.", "player_camp_ransom_on",
+		[
+			(party_get_slot, ":chest", "$g_talk_troop_party", slot_pcamp_camp_chest),
+			(troop_set_slot, ":chest", slot_pcamp_chest_sell_prisoners, 1),
+		] ],
+
+	[anyone, "player_camp_ransom_on", [],
+		"Very well, I will do that whenever there is a broker in the city.", "player_camp_start", [] ],
+
+	[anyone|plyr, "player_camp_choice",
+		[
+			(party_get_slot, ":chest", "$g_talk_troop_party", slot_pcamp_camp_chest),
+			(troop_slot_eq, ":chest", slot_pcamp_chest_sell_prisoners, 1),
+		],
+		"I want you to stop ransoming all prisoners on your own.", "player_camp_ransom_off",
+		[
+			(party_get_slot, ":chest", "$g_talk_troop_party", slot_pcamp_camp_chest),
+			(troop_set_slot, ":chest", slot_pcamp_chest_sell_prisoners, 0),
+		] ],
+
+	[anyone, "player_camp_ransom_off", [],
+		"Very well, I will keep them safe here in the camp.", "player_camp_start", [] ],
+
+	[anyone|plyr, "player_camp_choice",
+		[
 			(assign, ":num_free", 0),
 			(party_get_num_companion_stacks, ":num_stacks", "p_main_party"),
 			(try_for_range, ":i_stack", 0, ":num_stacks"),

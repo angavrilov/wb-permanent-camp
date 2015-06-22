@@ -186,10 +186,13 @@ game_menus = [
 
 				# Register links to chest
 				(assign, ":camp_chest", "$g_talk_troop_party"),
+				(call_script, "script_cleanup_player_camp_slot", ":camp_chest"),
 				(troop_set_slot, ":camp_chest", slot_pcamp_chest_party, ":camp_party"),
 				(troop_set_slot, ":camp_chest", slot_pcamp_chest_center, "$g_talk_troop_faction"),
 				(party_set_slot, ":camp_party", slot_pcamp_camp_chest, ":camp_chest"),
-				(troop_clear_inventory, ":camp_chest"),
+
+				(call_script, "script_find_closest_town", ":camp_party"),
+				(troop_set_slot, ":camp_chest", slot_pcamp_chest_city, reg0),
 
 				# Set the commander; the party should always remain fac_player_faction
 				(call_script, "script_set_player_camp_commander", ":camp_party", "$g_talk_troop"),
@@ -215,6 +218,12 @@ game_menus = [
 				(change_screen_return),
 			(else_try),
 				(party_get_slot, "$g_talk_troop", "$g_encountered_party", slot_pcamp_camp_commander),
+				(party_get_slot, ":camp_chest", "$g_encountered_party", slot_pcamp_camp_chest),
+				# withdraw cash
+				(store_troop_gold, ":gold", ":camp_chest"),
+				(troop_remove_gold, ":camp_chest", ":gold"),
+				(troop_add_gold, "trp_player", ":gold"),
+				# update stuff
 				(call_script, "script_calc_player_camp_bandit_attraction", "$g_encountered_party"),
 				(call_script, "script_set_pcamp_banner_from_troop", "$g_encountered_party", "trp_player"),
 				(str_store_troop_name, s3, "$g_talk_troop"),

@@ -15,6 +15,10 @@ Features:
     - Camp will join in the battle if player is attacked right on top of it.
     - Player will stop resting and join battle if current camp is attacked.
 
+  * Miscellaneous features.
+
+    - Camp can auto-ransom prisoners when there is a broker in the nearest town.
+
 Configuration:
 
   There are some options at the start of pcamp_constants.py. The absolute maximum

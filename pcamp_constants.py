@@ -41,8 +41,10 @@ slot_pcamp_camp_commander = slot_town_elder
 slot_pcamp_camp_chest = slot_town_merchant
 slot_pcamp_camp_initialized = slot_center_player_relation
 
-slot_pcamp_chest_commander = slot_troop_guardian
-slot_pcamp_chest_party = slot_troop_home
-slot_pcamp_chest_center = slot_troop_cur_center
-slot_pcamp_chest_items = slot_troop_renown
-slot_pcamp_chest_value = slot_troop_wealth
+slot_pcamp_chest_commander = 33 #slot_troop_guardian
+slot_pcamp_chest_party = 60 #slot_troop_home
+slot_pcamp_chest_center = 12 #slot_troop_cur_center
+slot_pcamp_chest_city = 9 #slot_troop_present_at_event
+slot_pcamp_chest_items = 7 #slot_troop_renown
+slot_pcamp_chest_value = 11 #slot_troop_wealth
+slot_pcamp_chest_sell_prisoners = 16 #slot_troop_player_order_state
